@@ -11,9 +11,13 @@ import java.io.Serializable;
 @Setter
 public class CategoryDTO implements Serializable {
 
-
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String name;
+
+    public CategoryDTO(){
+    }
 
     public CategoryDTO(Long id, String name) {
         this.id = id;
