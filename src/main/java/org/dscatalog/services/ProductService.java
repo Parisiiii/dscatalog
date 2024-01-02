@@ -12,6 +12,7 @@ import org.dscatalog.repositories.ProductRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAllPageable(PageRequest pageRequest) {
+    public Page<ProductDTO> findAllPageable(Pageable pageRequest) {
         Page<Product> list = repository.findAll(pageRequest);
         return list.map(ProductDTO::new);
     }
@@ -74,7 +75,7 @@ public class ProductService {
         entity.setImgUrl(dto.getDescription());
         entity.setDate(dto.getDate());
         entity.getCategories().clear();
-        for(CategoryDTO categoryDTO : dto.getCategories()){
+        for (CategoryDTO categoryDTO : dto.getCategories()) {
             Category categoryEntity = categoryRepository.getReferenceById(categoryDTO.getId());
             entity.getCategories().add(categoryEntity);
         }

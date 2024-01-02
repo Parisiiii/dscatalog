@@ -4,6 +4,7 @@ import org.dscatalog.dtos.CategoryDTO;
 import org.dscatalog.services.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +23,8 @@ public class CategoryRestController {
     }
 
     @GetMapping("/getall")
-    public ResponseEntity<Page<CategoryDTO>> getAll(
-        @RequestParam(value = "page", defaultValue = "0") Integer page,
-        @RequestParam(value = "linesPerPage", defaultValue = "20") Integer linesPerPage,
-        @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-        @RequestParam(value = "orderBy", defaultValue = "id") String orderBy
-    ) {
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-
-        Page<CategoryDTO> toReturn = service.findAllPageable(pageRequest);
+    public ResponseEntity<Page<CategoryDTO>> getAll(Pageable pageable) {
+        Page<CategoryDTO> toReturn = service.findAllPageable(pageable);
         return ResponseEntity.ok(toReturn);
     }
 

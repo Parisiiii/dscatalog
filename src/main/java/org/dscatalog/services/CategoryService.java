@@ -9,6 +9,7 @@ import org.dscatalog.exceptions.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +22,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public Page<CategoryDTO> findAllPageable(PageRequest pageRequest) {
-
+    public Page<CategoryDTO> findAllPageable(Pageable pageRequest) {
         Page<Category> list = repository.findAll(pageRequest);
         return list.map(CategoryDTO::new);
     }
